@@ -1,0 +1,160 @@
+//rf4
+db.createCollection("medico", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nombre", "registroMedico", "especialidad"],
+      properties: {
+        nombre: {
+          bsonType: "string",
+          minLength: 5,
+          description: "Nombre debe ser string de mínimo 5 caracteres y comenzar con 'Dr.' o 'Dra.'"
+        },
+        registroMedico: {
+          bsonType: "string",
+          pattern: "^RM[0-9]{5}$",
+          description: "Registro médico debe tener formato RM seguido de 5 números"
+        },
+        especialidad: {
+          bsonType: "string",
+          enum: ["Medicina General", "Cardiología", "Medicina de Urgencias", "Fisioterapia", "Pediatría", "Ginecología", "Neurología", "Ortopedia"],
+          description: "Especialidad debe ser una de las especialidades médicas válidas"
+        }
+      }
+    }
+  },
+  validationAction: "error",
+  validationLevel: "strict"
+})
+
+//invalido
+db.medico.insertOne({
+    "nombre": "Dr. Juan Carlos Pérez",
+    "registroMedico": "INVALID123",
+    "especialidad": "Cardiología"
+  })
+
+//RF5
+db.createCollection("afiliado", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nombre", "tipoDocumento", "numeroDocumento", "tipoAfiliado", "relacion"],
+      properties: {
+        nombre: {
+          bsonType: "string",
+          minLength: 3,
+          description: "Nombre debe ser string de mínimo 3 caracteres"
+        },
+        tipoDocumento: {
+          bsonType: "string",
+          enum: ["CC", "TI", "CE", "PA"],
+          description: "Tipo de documento debe ser CC, TI, CE o PA"
+        },
+        numeroDocumento: {
+          bsonType: "string",
+          pattern: "^[0-9]+$",
+          minLength: 7,
+          maxLength: 10,
+          description: "Número de documento debe contener solo números, entre 7 y 10 dígitos"
+        },
+        tipoAfiliado: {
+          bsonType: "string",
+          enum: ["Contribuyente", "Beneficiario"],
+          description: "Tipo de afiliado debe ser Contribuyente o Beneficiario"
+        },
+        relacion: {
+          bsonType: "string",
+          enum: ["No aplica", "Esposa", "Esposo", "Hijo", "Hija", "Padre", "Madre"],
+          description: "Relación debe ser 'No aplica' para contribuyentes o parentesco válido para beneficiarios"
+        },
+        telefono: {
+          bsonType: "string",
+          pattern: "^[0-9]{10}$",
+          description: "Teléfono debe tener exactamente 10 dígitos"
+        },
+        fechaNacimiento: {
+          bsonType: "string",
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          description: "Fecha de nacimiento debe tener formato YYYY-MM-DD"
+        }
+      }
+    }
+  },
+  validationAction: "error",
+  validationLevel: "strict"
+})
+
+//invalido
+db.afiliado.insertOne({
+    "nombre": "Juan Pérez García",
+    "tipoDocumento": "INVALID",
+    "numeroDocumento": "12345678",
+    "tipoAfiliado": "Contribuyente",
+    "relacion": "No aplica"
+  })
+
+//RF6
+db.createCollection("servicio", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nombre", "especialidad"],
+      properties: {
+        nombre: {
+          bsonType: "string",
+          enum: ["Consulta general", "Consulta con especialista", "Urgencias", "Ecocardiograma", "Terapia física"],
+          description: "Nombre debe ser uno de los servicios válidos"
+        },
+        especialidad: {
+          bsonType: "string",
+          minLength: 3,
+          description: "Especialidad debe tener mínimo 3 caracteres"
+        }
+      }
+    }
+  },
+  validationAction: "error",
+  validationLevel: "strict"
+})
+
+//invalido
+db.servicio.insertOne({
+    "nombre": "Servicio Inexistente",
+    "especialidad": "Cardiología",
+    "descripcion": "Descripción del servicio"
+  })
+
+//RF7
+db.createCollection("orden", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["fecha", "estado", "medico", "afiliado", "servicio"],
+      properties: {
+        fecha: {
+          bsonType: "string",
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          description: "Fecha debe tener formato YYYY-MM-DD"
+        },
+        estado: {
+          bsonType: "string",
+          enum: ["Pendiente", "Completada", "Cancelada"],
+          description: "Estado debe ser válido"
+        }
+      }
+    }
+  },
+  validationAction: "error",
+  validationLevel: "strict"
+})
+
+//invalido
+db.orden.insertOne({
+    "fecha": "2025/05/25",
+    "estado": "Pendiente",
+    "medico": ObjectId("507f1f77bcf86cd799439011"),
+    "afiliado": ObjectId("507f1f77bcf86cd799439012"),
+    "servicio": ObjectId("507f1f77bcf86cd799439013"),
+    "observaciones": "Paciente requiere examen especializado"
+  })

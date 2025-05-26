@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "7027a772-6c85-4b14-a4c8-ca9af81d3c35",
+		"name": "Sistrans Proyecto 3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41592121",
+		"_collection_link": "https://superfood-1971.postman.co/workspace/SuperFood~b820a9d9-5cff-4cce-9529-f361eec6a454/collection/41592121-7027a772-6c85-4b14-a4c8-ca9af81d3c35?action=share&source=collection_link&creator=41592121"
+	},
+	"item": [
+		{
+			"name": "RF2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Consulta con especialista\",\r\n    \"descripcion\": \"Consulta con médico especialista - Requiere orden previa\",\r\n    \"especialidad\": \"Cardiología\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/servicios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"servicios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RF4",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Dr. María Elena Rodríguez\",\r\n    \"registroMedico\": \"RM12345\",\r\n    \"especialidad\": \"Cardiología\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/medicos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"medicos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RF5",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Juan Carlos Pérez\",\r\n    \"tipoDocumento\": \"CC\",\r\n    \"numeroDocumento\": \"12345678\",\r\n    \"fechaNacimiento\": \"1985-03-15\",\r\n    \"direccion\": \"Calle 123 #45-67\",\r\n    \"telefono\": \"3001234567\",\r\n    \"tipoAfiliado\": \"Contribuyente\",\r\n    \"relacion\": \"No aplica\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/afiliados",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"afiliados"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RF6",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"medico\": {\r\n        \"id\": \"{{medicoGeneralId}}\"\r\n    },\r\n    \"afiliado\": {\r\n        \"id\": \"{{afiliadoId}}\"\r\n    },\r\n    \"servicio\": {\r\n        \"id\": \"{{servicioEspecialistaId}}\"\r\n    },\r\n    \"observaciones\": \"Paciente presenta síntomas de arritmia cardíaca, requiere evaluación especializada en cardiología\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/ordenes/registrar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ordenes",
+						"registrar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RF71",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080//citas/disponibilidad/{{servicioConsultaGeneralId}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"citas",
+						"disponibilidad",
+						"{{servicioConsultaGeneralId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RF72",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"servicioId\": \"{{servicioConsultaGeneralId}}\",\r\n    \"afiliadoId\": \"{{afiliadoId}}\",\r\n    \"medicoId\": \"{{medicoGeneralId}}\",\r\n    \"fecha\": \"2025-06-01\",\r\n    \"hora\": \"10:00\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/citas/agenda",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"citas",
+						"agenda"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RFC1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/citas/disponibilidad?servicioId=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"citas",
+						"disponibilidad"
+					],
+					"query": [
+						{
+							"key": "servicioId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RFC2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/servicios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"servicios"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
